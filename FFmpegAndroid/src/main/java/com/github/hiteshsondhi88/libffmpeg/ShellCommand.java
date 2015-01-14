@@ -14,6 +14,16 @@ class ShellCommand {
         return process;
     }
 
+    Process run(String[] commandArray) {
+        Process process = null;
+        try {
+            process = Runtime.getRuntime().exec(commandArray);
+        } catch (IOException e) {
+            Log.e("Exception while trying to run: " + commandArray, e);
+        }
+        return process;
+    }
+
     CommandResult runWaitFor(String s) {
         Process process = run(s);
 

@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 
 class Util {
 
@@ -70,5 +73,30 @@ class Util {
             // do nothing
         }
         return false;
+    }
+
+    static String[] convertCommandToArray(String ffmpeg, String command) {
+        String[] commandSplit = command.split("\"");
+        ArrayList<String> commandList = new ArrayList<String>();
+        commandList.add(ffmpeg);
+
+        for (int i = 0; i < commandSplit.length; i++)
+        {
+            if (i % 2 == 0) {
+                commandList.addAll(Arrays.asList(commandSplit[i].split(" ")));
+            } else {
+                commandList.add(commandSplit[i]);
+            }
+        }
+
+        Iterator<String> iter = commandList.iterator();
+
+        while (iter.hasNext()) {
+            if (iter.next().equals("")) {
+                iter.remove();
+            }
+        }
+
+        return commandList.toArray(new String[commandList.size()]);
     }
 }

@@ -3,10 +3,10 @@ package com.github.hiteshsondhi88.libffmpeg;
 import android.content.Context;
 import android.text.TextUtils;
 
-import java.util.Map;
-
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegCommandAlreadyRunningException;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedException;
+
+import java.util.Map;
 
 @SuppressWarnings("unused")
 public class FFmpeg implements FFmpegInterface {
@@ -66,7 +66,8 @@ public class FFmpeg implements FFmpegInterface {
             throw new FFmpegCommandAlreadyRunningException("FFmpeg command is already running, you are only allowed to run single command at a time");
         }
         if (!TextUtils.isEmpty(cmd)) {
-            String ffmpegCmd = FileUtils.getFFmpeg(context, environvenmentVars) + " "+ cmd;
+            // String ffmpegCmd = FileUtils.getFFmpeg(context, environvenmentVars) + " "+ cmd;
+            String[] ffmpegCmd = Util.convertCommandToArray(FileUtils.getFFmpeg(context, environvenmentVars), cmd);
             ffmpegExecuteAsyncTask = new FFmpegExecuteAsyncTask(ffmpegCmd, timeout, ffmpegExecuteResponseHandler);
             ffmpegExecuteAsyncTask.execute();
         } else {
